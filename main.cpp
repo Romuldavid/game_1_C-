@@ -7,7 +7,7 @@ using namespace sf;
 int main()
 {
     // Create a video mode object
-    VideoMode vm(1920, 1080);
+    VideoMode vm(1440, 810);
     //VideoMode vm(640, 480);
 
     // Create and open a window for the game
