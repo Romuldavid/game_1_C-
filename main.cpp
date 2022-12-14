@@ -2,6 +2,7 @@
 //2. g++ main.o -o main-app -lsfml-graphics -lsfml-window -lsfml-system
 //3. ./main-app
 #include <SFML/Graphics.hpp>
+//#include <SFML/System.hpp>
 using namespace sf;
 
 int main()
@@ -81,7 +82,8 @@ int main()
     float cloud2Speed = 0.0f;
     float cloud3Speed = 0.0f;
     
-    
+    // Variables to control time itself
+	Clock clock;
 
 
 
@@ -99,7 +101,38 @@ int main()
         ****************************************
         Update the scene
         ****************************************
-        */      
+        */
+
+       //  Measure time
+       
+       Time dt = clock.restart();
+
+       // Setup the bee
+       if(!beeActive)
+       {
+            //How fast is the bee
+            srand((int)time(0));
+            beeSpeed = (rand() % 200) + 200;
+
+            //How high is the bee
+            srand((int)time(0) * 10);
+            float height = (rand() % 500) + 500;
+            spriteBee.setPosition(2000, height);
+            beeActive =true;
+       }
+       else // Move the bee
+       {
+            spriteBee.setPosition(spriteBee.getPosition().x -
+                (beeSpeed * dt.asSeconds()),
+                spriteBee.getPosition().y);
+
+            // Has the bee reached the left-hand edge of the screen?
+            if(spriteBee.getPosition().x < - 100)
+            {
+                // Set it up ready to be a whole new bee next frame
+                beeActive = false;    
+            }
+       }
 
        /*
         ****************************************
